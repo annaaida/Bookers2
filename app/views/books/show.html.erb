@@ -1,0 +1,80 @@
+<div class = "container">
+  <div>
+      <% if @book.errors.any? %>
+          <h3 style="color:red"><%= @book.errors.count %> errors prohibited this obj from being saved.</h3><br>
+          <% @book.errors.full_messages.each do |message| %>
+            <p style="color:red"><%= message %></p>
+          <% end %>
+        <% end %>
+  </div>
+    <div class = "row">
+      <div class = "col-xs-3">
+        <h2 class = "profile">User info</h2>
+        <div class="user-image"><%= attachment_image_tag @user, :profile_image, :fill, 1, 1, format: 'jpeg', fallback: "noimage.jpg" %>
+        </div>
+
+        <table class = "table">
+          <tbody>
+            <tr></tr>
+          <tr>
+              <th>name</th>
+              <th><%= @user.name %></th>
+          </tr>
+          <tr>
+              <th>introduction</th>
+                <th><%= @user.introduction %></th>
+          </tr>
+          </tbody>
+        </table>
+
+                <div class = "row">
+                  <%= link_to '', edit_user_path(@user), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench" %>
+                </div>
+
+        <h2 class = "new-post">New book</h2>
+
+          <%= form_for(@abook) do |f| %>
+
+        <div class = "input">
+           <h5 class = "input_content"><strong>Title</strong></h5>
+           <div class = "box"><%= f.text_field :title, class: "col-xs-12" %></div>
+          </div>
+          <div class = "input">
+           <h5 class = "input_content"><strong>Opinion</strong></h5>
+           <div class = "box"><%= f.text_area :body, class: "col-xs-12" %></div>
+          </div>
+          <%= f.submit 'Create Book', class: "btn btn-primary col-xs-12" %>
+
+          <% end %>
+        </div>
+
+      <div class = "col-xs-9">
+
+        <h2>Book details</h2>
+          <table class="table table-hover">
+          　 <thead>
+             <tr>
+              <th></th>
+              <th>Title</th>
+              <th>Opinion</th>
+              <th></th>
+              <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+              <td class = "contents"><%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "noimage.jpg" %><br>
+              <%= link_to @user.name, user_path(@user.id) %>
+              </td>
+                <td class = "contents"><%= link_to @book.title, book_path(@book.id), class: "text-muted" %></td>
+                <td class = "contents"><%= @book.body %></td>
+              <% if @book.user_id == current_user.id %>
+                <td class = "contents"><%= link_to 'edit', edit_book_path(@book.id), class: "btn-sm btn-success" %></td>
+                <td class = "contents"><%= link_to 'destroy', book_path(@book.id), method: :delete, data:{confirm:"Are you sure?"}, class: "btn-sm btn-danger" %></td>
+              <% end %>
+              </tbody>
+            </table>
+      </div>
+        </div>
+    </div>

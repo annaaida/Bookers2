@@ -1,0 +1,37 @@
+ <div class = "container">
+  <div>
+      <% if @book.errors.any? %>
+          <h3 style="color:red"><%= @book.errors.count %> errors prohibited this obj from being saved.</h3><br>
+          <% @book.errors.full_messages.each do |message| %>
+            <p style="color:red"><%= message %></p>
+          <% end %>
+        <% end %>
+  </div>
+   <div class = "row">
+	<h1 class = "editing-title col-xs-offset-3"> Editing Book</h1>
+
+	<%= form_for(@book) do |f| %>
+	   <div class = "row col-xs-offset-3">
+    	<div class = "input">
+		  <h5 class = "input_content">Title</h5>
+		  <%= f.text_field :title, class: "col-xs-8" %>
+    	</div>
+    	<br>
+    	<div class = "input">
+		  <h5 class = "input_content">Opinion</h5>
+	      <%= f.text_area :body, class: "col-xs-8" %>
+		</div>
+		<br>
+		<div class = "input">
+		  <%= f.submit "Update Book", class: "btn btn-primary col-xs-8"  %>
+		</div>
+	<% end %>
+	   </div>
+	   <div class = "row col-xs-offset-3">
+		<div class = "pull-left"><%= link_to 'show', book_path(@book.id), class: "text-muted" %></div>
+		<div class = "pull-left"> | </div>
+		<div class = "pull-left"><%= link_to 'back', books_path(@book.id), class: "text-muted" %></div>
+	   </div>
+   </div>
+  </div>
+
